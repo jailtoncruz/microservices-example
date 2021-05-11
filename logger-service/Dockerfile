@@ -3,13 +3,10 @@ FROM node:14-alpine
 WORKDIR /srv/logger-service
 
 COPY package.json yarn.lock ./
+COPY dist/ .
 
 RUN yarn
 
-RUN yarn build
+EXPOSE 3332
 
-COPY . .
-
-EXPOSE 3333
-
-CMD ["node","dist/index.js"]
+CMD ["node","index.js"]

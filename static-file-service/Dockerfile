@@ -3,13 +3,11 @@ FROM node:14-alpine
 WORKDIR /srv/static-file-service
 
 COPY package.json yarn.lock ./
+COPY dist/ .
+COPY public ../public
 
 RUN yarn
 
-RUN yarn build
+EXPOSE 3331
 
-COPY . .
-
-EXPOSE 3333
-
-CMD ["node","dist/index.js"]
+CMD ["node","index.js"]

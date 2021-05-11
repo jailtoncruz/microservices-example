@@ -47,6 +47,21 @@ class LoggerController {
         return res.json();
     }
 
+    writeLocal(source: Controllers, message: string) {
+        const today = new Date(Date.now());
+        const fileName = `totem-logs-${today.getDate().toString().padStart(2, "0")}-${String(today.getMonth() + 1).padStart(2, "0")}-${today.getFullYear()}.log`;
+        const fullLogMessage = `[${today.getDate().toString().padStart(2, "0")
+            }-${String(today.getMonth() + 1).padStart(2, "0")
+            }-${today.getFullYear()} ${today.getHours().toString().padStart(2, "0")
+            }:${today.getMinutes().toString().padStart(2, "0")
+            }:${today.getMilliseconds().toString().padEnd(2, "0").slice(0, 2)}]:  ${source} >  ${message}`;
+
+        fs.appendFile(path.resolve(WORKDIR, fileName), fullLogMessage + "\n", (err) => {
+            if (err) throw err;
+            console.log(fullLogMessage);
+        })
+        logs.push(fullLogMessage)
+    }
 }
 
 export default LoggerController;

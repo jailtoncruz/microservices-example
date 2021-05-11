@@ -3,13 +3,10 @@ FROM node:14-alpine
 WORKDIR /srv/authentication-service
 
 COPY package.json yarn.lock ./
+COPY dist/ .
 
 RUN yarn
 
-RUN yarn build
-
-COPY . .
-
 EXPOSE 3333
 
-CMD ["node","dist/index.js"]
+CMD ["node","index.js"]
